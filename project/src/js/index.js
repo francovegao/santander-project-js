@@ -8,7 +8,7 @@ const botonClear = document.getElementById('clear');
 const botonClear2 = document.getElementById('clear2');
 const botonSearch = document.getElementById('search');
 const input= document.getElementById('text');
-let contador=0; 
+let contador=0;
 
 //BUSCAR RECETAS POR AREA (PAIS)
 botonSearch.addEventListener('mousedown', function(event){
@@ -30,7 +30,7 @@ botonSearch.addEventListener('mousedown', function(event){
                     let title=document.createTextNode(getTitle(data));
                     const img = document.createElement('img');
                     img.src = getImageUrl(data);
-                    img.className=contador;
+                    img.id=`img${contador}`;
                     const p = document.createElement('p');
                     
                     cont.appendChild(container)
@@ -39,7 +39,7 @@ botonSearch.addEventListener('mousedown', function(event){
                     container.appendChild(img);
                     
                     const section=document.createElement('section'); 
-                    section.className=contador;
+                    section.id=`section${contador}`;
                     section.style.display='none';
                     container.appendChild(section);
                     getRecipesIdNumber(idNumber)
@@ -68,7 +68,10 @@ botonSearch.addEventListener('mousedown', function(event){
                       })
                       contador++;
                 })
+                createButtons(contador);
+                contador=0;
             })
+            
     }
 })
 
@@ -116,10 +119,26 @@ botonRandom.addEventListener('mousedown', function(event){
                 })
             })
     }
-    
 })
 
+//Funcion para mostrar ingredientes e instrucciones al hacer click en la imagen
+function createButtons(contador){
+    let totalArray=[] 
+    console.log("Funcion createButtons", contador)
+    for(let i=0; i<contador; i++){
+      totalArray.push(document.getElementById(`img${i}`));
+      totalArray.push(document.getElementById(`section${i}`))
+    }
 
+    for(let i=0; i<totalArray.length; i=i+2){
+        totalArray[i].addEventListener('mousedown', function(event){
+            if(event.button === 0){
+                totalArray[i+1].style.display='block';  
+            }
+        })
+    }
+    contador=0;
+}
 
 //Event listener para boton de borrar receta de pantalla 
 botonClear.addEventListener('mousedown', function(event){
