@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Recetario</title>
+    <title>Recetario Projecto JS</title>
 </head>
 <body>
-    <h1>Recetario Projecto JS</h1>
+    <nav class="navbar fixed-top navbar-light" style="background-color: white;">
+        <a class="navbar-brand logo" href="#">
+          <img src="assets/prueba2.jpeg" width="30" height="30" class="d-inline-block align-top" alt="">
+          Recetario Mundial
+        </a>
+        <span class="navbar-text">
+            Projecto fase 2: BEDU frontend fundamentals
+          </span>
+      </nav>
+
+    <h1>RECETARIO MUNDIAL</h1>
     <div id="listado"> 
-        <p>Opciones de busqueda:</p>
+        <h2>Encuentra las mejores recetas por país</h2>
+        <p id="intro">Ingresa alguno de los siguientes paises en la barra de busqueda:</p>
         <ul>
             <li>American</li>
             <li>British</li>
@@ -41,11 +54,48 @@
             <li>Vietnamese</li>
           </ul>
     </div>
-    <input type="text" id="text" />
-    <button id="search">Search recipe</button>
-    <button id="clear">Clear recipe</button>
-    <button id="random">Random recipe</button>
-    <button id="clear2">Clear random recipe</button>
+
+   <!-- <section class="interactions">
+        <article class="interactions-pais">
+            <input type="text" id="text" placeholder="Escribe un pais"/>
+            <section>
+            <button id="search">Search recipe</button>
+            <button id="clear">Clear recipe</button>
+            </section>
+        </article>
+        <article class="interactions-random">
+           <p>¿No sabes que cocinar hoy? Prueba una receta aleatoria:</p>
+            <section>
+            <button id="random">Random recipe</button>
+            <button id="clear2">Clear random recipe</button>
+            </section>
+        </atricle>
+    </section>-->
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card w-75 text-center mx-auto">
+      <div class="card-body">
+        <h5 class="card-title">¿De que pais quieres comer hoy?</h5>
+        <p class="card-text"><input type="text" id="text" placeholder="Escribe un pais"/></p>
+        <button id="search" class="btn btn-primary">Search recipe</button>
+        <button id="clear" class="btn btn-primary">Clear recipe</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card w-75 text-center mx-auto">
+      <div class="card-body">
+        <h5 class="card-title">¿No sabes que cocinar hoy? </h5>
+        <p class="card-text">Prueba una receta aleatoria:</p>
+        <button id="random" class="btn btn-primary">Random recipe</button>
+        <button id="clear2" class="btn btn-primary">Clear random recipe</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <div id="app"></div>
 </body>
     <script type="text/javascript" src="./js/index.js"></script>
