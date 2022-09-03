@@ -26,7 +26,7 @@ botonSearch.addEventListener('mousedown', function(event){
                     const container=document.createElement('div'); //Crea contenedor DIV para contener la receta
                     container.className="recipes"
                     
-                    const sub = document.createElement('p');
+                    const sub = document.createElement('h3');
                     let title=document.createTextNode(getTitle(data));
                     const img = document.createElement('img');
                     img.src = getImageUrl(data);
@@ -187,7 +187,7 @@ function getIngredients(data){
     }
 
    for(let x=0; x<result.length;x=x+2){
-        string=`${string}${result.slice(x,x+2)}+\n`;
+        string=`${string}${result.slice(x,x+2)}   +   \n`;
    }
     let newstr=string.replace(/,/g,':')
     return newstr;
