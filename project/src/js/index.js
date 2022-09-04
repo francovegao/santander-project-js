@@ -1,4 +1,4 @@
-//import '../css/styles.css';
+ //import '../css/styles.css';
 //import image from '../assets/prueba2.jpeg';
 
 //Obtener elementos del DOM
