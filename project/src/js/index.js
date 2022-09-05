@@ -1,5 +1,5 @@
-//import '../css/styles.css';
-//import image from '../assets/prueba.jpeg';
+ //import '../css/styles.css';
+//import image from '../assets/prueba2.jpeg';
 
 //Obtener elementos del DOM
 const app = document.getElementById('app');
@@ -17,13 +17,13 @@ botonSearch.addEventListener('mousedown', function(event){
         getRecipesArea(input.value)
             .then(function(data){
                 console.log(data)  
-                const cont=document.createElement('div'); //Crea contenedor DIV para contener la receta
+                const cont=document.createElement('div'); 
                 cont.id="areaRecipes";
                 app.appendChild(cont);
 
                 data.meals.forEach(function(data) {
                     let idNumber=getIdNumber(data);
-                    const container=document.createElement('div'); //Crea contenedor DIV para contener la receta
+                    const container=document.createElement('div'); 
                     container.className="recipes"
                     
                     const sub = document.createElement('h3');
@@ -48,8 +48,7 @@ botonSearch.addEventListener('mousedown', function(event){
                             const sub1 = document.createElement('p');
                             sub1.id="subtitulo"
                             const title2=document.createTextNode("Ingredients:")
-                            const p2 = document.createElement('p');
-                            let ingredients=document.createTextNode(getIngredients(data));
+                            let datos=getIngredients(data)
                             const sub2 = document.createElement('p');
                             sub2.id="subtitulo2"
                             const title3=document.createTextNode("Instructions:")
@@ -58,8 +57,7 @@ botonSearch.addEventListener('mousedown', function(event){
 
                             sub1.appendChild(title2)
                             section.appendChild(sub1)
-                            p2.appendChild(ingredients)
-                            section.appendChild(p2)
+                            section.appendChild(datos)
                             sub2.appendChild(title3)
                             section.appendChild(sub2)
                             p3.appendChild(instructions)
@@ -76,32 +74,30 @@ botonSearch.addEventListener('mousedown', function(event){
 })
 
 //GENERAR RECETA RANDOM
-//Event listener para boton de Random Recipe, al presionarlo muestra receta RANDOM
-//Si se presiona mas de una vez va mostrando varias recetas, una debajod e otra 
 botonRandom.addEventListener('mousedown', function(event){
-    if(event.button === 0){ //Al hacer click en boton
+    if(event.button === 0){ 
 
         getRandomMeal()
             .then(function(data){
                 console.log(data)
                 
                 data.meals.forEach(function(data) {
-                    const container=document.createElement('div'); //Crea contenedor DIV para contener la receta
-                    container.id="randomRecipe"; //Se le asigna ID randomRecipe al contenedor DIV para despues poder limpiar la pantalla 
+                    const container=document.createElement('div'); 
+                    container.id="randomRecipe"; 
                     const sub = document.createElement('h2');
-                    let title=document.createTextNode(getTitle(data)); //Obtiene titulo de receta
+                    sub.id="randomTitle";
+                    let title=document.createTextNode(getTitle(data)); 
                     const img = document.createElement('img');
-                    img.src = getImageUrl(data); //Obtiene imagen de receta
+                    img.src = getImageUrl(data); 
                     const sub1 = document.createElement('p');
                     sub1.id="subtitulo"
                     const title2=document.createTextNode("Ingredients:")
-                    const p2 = document.createElement('p');
-                    let ingredients=document.createTextNode(getIngredients(data)); //Obtiene ingredientes de receta
+                    let datos=getIngredients(data)
                     const sub2 = document.createElement('p');
                     sub2.id="subtitulo2"
                     const title3=document.createTextNode("Instructions:")
                     const p3 = document.createElement('p');
-                    let instructions=document.createTextNode(getInstructions(data)); //Obtiene instrucciones de receta
+                    let instructions=document.createTextNode(getInstructions(data)); 
                     
                     //Agrega todos los elementos al contenedor APP dentro de su propio contenedor 
                     app.appendChild(container)
@@ -110,8 +106,7 @@ botonRandom.addEventListener('mousedown', function(event){
                     container.appendChild(img)
                     sub1.appendChild(title2)
                     container.appendChild(sub1)
-                    p2.appendChild(ingredients)
-                    container.appendChild(p2)
+                    container.appendChild(datos)
                     sub2.appendChild(title3)
                     container.appendChild(sub2)
                     p3.appendChild(instructions)
@@ -149,8 +144,7 @@ botonClear.addEventListener('mousedown', function(event){
 })
 
 botonClear2.addEventListener('mousedown', function(event){
-    if(event.button === 0){
-        //Elimina contenedor DIV randomRecipe, por lo tanto se elimina la receta de pantalla 
+    if(event.button === 0){ 
         const randomRecipe = document.getElementById('randomRecipe');
         randomRecipe.remove()
     }
@@ -164,18 +158,20 @@ function getRandomMeal() {
         })
 }
 
-//Obtiene titulo de randomMeal
+//Obtiene titulo de receta
 function getTitle(data){
     return `${data.strMeal}`
 }
 
-//Obtiene imagen de RandomMeal
+//Obtiene imagen de receta
 function getImageUrl(data){
     return `${data.strMealThumb}`
 }
 
-//Obtiene ingredientes de RandomMeal
+//Obtiene ingredientes de receta
 function getIngredients(data){
+    const list = document.createElement('ul');
+    list.id="ingredients"
    let array= Object.entries(data)
    let result=[]
    let x=29;
@@ -186,11 +182,27 @@ function getIngredients(data){
         x++;
     }
 
+    let listado=[];
+    let count=0;
+    let strIngr='';
+    let newstr='';
    for(let x=0; x<result.length;x=x+2){
-        string=`${string}${result.slice(x,x+2)}   +   \n`;
+        listado[count]=document.createElement('li')
+        strIngr=`${string}${result.slice(x,x+2)}\n`;
+        newstr=strIngr.replace(/,/g,':')
+        let text=document.createTextNode(newstr);
+        listado[count].appendChild(text);
+        count++;
+        strIngr="";
+        text="";
+        newstr="";
    }
-    let newstr=string.replace(/,/g,':')
-    return newstr;
+   
+   for (const iterator of listado) {
+        list.appendChild(iterator)
+   }
+    console.log("en getingredients", list)
+    return list;
 }
 
 //Obtiene las instrucciones de RandomMeal
@@ -198,7 +210,7 @@ function getInstructions(data){
     return `${data.strInstructions}`
 }
 
-//BUSCAR MEAL NORMAL
+//Buscar receta por area
 function getRecipesArea(area) {
     let baseUrl='https://www.themealdb.com/api/json/v1/1/filter.php?a'
     let url=`${baseUrl}=${area}`
@@ -208,10 +220,12 @@ function getRecipesArea(area) {
         })
 }
 
+//Obtiene numero ID de receta
 function getIdNumber(data){
     return `${data.idMeal}`
 }
 
+//Obtiene recetas por numero ID
 function getRecipesIdNumber(idNumber){
     let baseUrl='https://www.themealdb.com/api/json/v1/1/lookup.php?i'
     let url=`${baseUrl}=${idNumber}`
